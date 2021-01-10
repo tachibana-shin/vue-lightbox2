@@ -1,0 +1,60 @@
+{
+  "name": "vue-lightbox2",
+  "description": "Lightbox for vue",
+  "version": "0.0.1-b1",
+  "author": "Nguyen Thanh",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "build:base": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build:ssr": "cross-env NODE_ENV=production webpack --config webpack.config.ssr.js --progress --hide-modules",
+    "build": "yarn build:base && yarn build:ssr"
+  },
+  "main": "dist/vue-lightbox2.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nguyenthanh1995/vue-lightbox2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nguyenthanh1995/vue-lightbox2/issues"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^2.0.0"
+  },
+  "keywords": [
+    "vue",
+    "gallery",
+    "lightbox",
+    "image"
+  ],
+  "devDependencies": {
+    "avoriaz": "^3.2.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^6.0.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-latest": "^6.0.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "chai": "^4.1.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "sass": "^1.32.2",
+    "sass-loader": "7.3.1",
+    "sinon": "^3.2.0",
+    "sinon-chai": "^2.12.0",
+    "style-loader": "^2.0.0",
+    "unminified-webpack-plugin": "^2.0.0",
+    "velocity-animate": "^1.5.1",
+    "vue": "^2.0.0",
+    "vue-loader": "^11.1.4",
+    "vue-template-compiler": "^2.0.0",
+    "webpack": "^2.7.0",
+    "webpack-dev-server": "^3.1.11",
+    "webpack-merge": "^4.1.1"
+  },
+  "dependencies": {}
+}
