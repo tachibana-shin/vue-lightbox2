@@ -1,7 +1,7 @@
 {
   "name": "vue-lightbox2",
   "description": "Lightbox for vue",
-  "version": "0.0.1-b2",
+  "version": "0.0.2-b1",
   "author": "Nguyen Thanh",
   "private": false,
   "publishConfig": {
