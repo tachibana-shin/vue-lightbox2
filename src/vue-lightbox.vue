@@ -11,8 +11,8 @@
         <span class="lightbox--grid__item--more" v-if="index == cells - 1 && items.length - cells > 0"> {{ items.length - cells }} +</span>
       </a>
     </div>
-    <transition enter-active-class="lightbox--animate lightbox--animate__fadeIn" leave-active-class="lightbox--animate lightbox--animate__fadeOut" v-if="!hidePopup">
-      <div class="lightbox--modal" v-if="openModal">
+    <transition enter-active-class="lightbox--animate lightbox--animate__fadeIn" leave-active-class="lightbox--animate lightbox--animate__fadeOut">
+      <div class="lightbox--modal" v-if="openModal && !hidePopup">
         <div class="lightbox--modal__counter"> {{ index + 1 }} / {{ items.length }} </div>
         <button class="lightbox--modal__btn lightbox--modal__btn-outline-danger lightbox--modal__btn-sm lightbox--modal__btn-close" @click="close; $emit('click:close')">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" width="1em" height="1em" fill="currentColor">

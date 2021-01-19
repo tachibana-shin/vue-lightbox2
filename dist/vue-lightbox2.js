@@ -123,9 +123,48 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
-var onKeyDown = void 0;
+let onKeyDown;
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     items: {
@@ -134,9 +173,7 @@ var onKeyDown = void 0;
     cells: {
       type: Number,
       default: 5,
-      validator: function validator(val) {
-        return val <= 5 && val >= 1;
-      }
+      validator: val => val <= 5 && val >= 1
     },
     width: {
       type: [String, Number],
@@ -146,20 +183,19 @@ var onKeyDown = void 0;
       type: [String, Number],
       default: 250
     },
-    classGrid: [Object, Array, String]
+    classGrid: [Object, Array, String],
+    hidePopup: Boolean
   },
-  data: function data() {
-    return {
-      index: -1,
-      loading: false,
-      openModal: false
-    };
-  },
+  data: () => ({
+    index: -1,
+    loading: false,
+    openModal: false
+  }),
   methods: {
-    getStyleValue: function getStyleValue(value) {
-      return typeof value == "number" ? value + "px" : value;
+    getStyleValue(value) {
+      return typeof value == "number" ? `${value}px` : value;
     },
-    showImage: function showImage(index) {
+    showImage(index) {
       this.openModal = true;
       if (index >= this.items.length) {
         index = this.items.length % index;
@@ -171,48 +207,44 @@ var onKeyDown = void 0;
       this.loading = true;
       this.index = index;
     },
-    next: function next() {
+    next() {
       this.showImage(this.index + 1);
     },
-    prev: function prev() {
+    prev() {
       this.showImage(this.index - 1);
     },
-    close: function close() {
+    close() {
       this.openModal = false;
       this.loading = false;
       this.index = -1;
     },
-    getBackgroundStyle: function getBackgroundStyle(src) {
-      return "background-image: url(\"" + src + "\")";
+    getBackgroundStyle(src) {
+      return `background-image: url("${src}")`;
     }
   },
   computed: {
-    src: function src() {
+    src() {
       return this.items[this.index];
     }
   },
-  created: function created() {
-    var _this = this;
-
-    window.addEventListener("keydown", onKeyDown = function onKeyDown(_ref) {
-      var keyCode = _ref.keyCode;
-
-      if (_this.index >= 0) {
+  created() {
+    window.addEventListener("keydown", onKeyDown = ({ keyCode }) => {
+      if (this.index >= 0) {
         switch (keyCode) {
           case 37:
-            _this.prev();
+            this.prev();
             break;
           case 39:
-            _this.next();
+            this.next();
             break;
           case 27:
-            _this.close();
+            this.close();
             break;
         }
       }
     });
   },
-  beforeDestroy: function beforeDestroy() {
+  beforeDestroy() {
     window.removeEventListener("keydown", onKeyDown);
   }
 });
@@ -223,15 +255,14 @@ var onKeyDown = void 0;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VueLightbox", function() { return VueLightbox; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_lightbox_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_lightbox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__vue_lightbox_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vue_lightbox_scss__ = __webpack_require__(0);
 
 
 
-var LightboxPlugin = {
-  install: function install(Vue) {
+const LightboxPlugin = {
+  install(Vue) {
     Vue.component("vue-lightbox", __WEBPACK_IMPORTED_MODULE_0__vue_lightbox_vue___default.a);
   }
 };
@@ -240,7 +271,9 @@ if (typeof window !== "undefined" && window.Vue) {
   Vue.use(LightboxPlugin);
 }
 
-var VueLightbox = __WEBPACK_IMPORTED_MODULE_0__vue_lightbox_vue___default.a;
+const VueLightbox = __WEBPACK_IMPORTED_MODULE_0__vue_lightbox_vue___default.a;
+/* harmony export (immutable) */ __webpack_exports__["VueLightbox"] = VueLightbox;
+
 /* harmony default export */ __webpack_exports__["default"] = (LightboxPlugin);
 
 /***/ }),
@@ -655,7 +688,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "lightbox--grid",
     class: [
-      ("lightbox--grid-" + (Math.min(_vm.items.length, _vm.cells)))
+      ("lightbox--grid-" + (Math.min(_vm.items.length, _vm.cells))),
+      _vm.classGrid
     ],
     style: ({
       width: _vm.getStyleValue(_vm.width),
@@ -669,10 +703,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "href": item
       },
       on: {
-        "click": function($event) {
+        "click": [function($event) {
           $event.preventDefault();
           return _vm.showImage(index)
-        }
+        }, function($event) {
+          return _vm.$emit('click:item', item, index)
+        }]
       }
     }, [(index == _vm.cells - 1 && _vm.items.length - _vm.cells > 0) ? _c('span', {
       staticClass: "lightbox--grid__item--more"
@@ -682,14 +718,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "enter-active-class": "lightbox--animate lightbox--animate__fadeIn",
       "leave-active-class": "lightbox--animate lightbox--animate__fadeOut"
     }
-  }, [(_vm.openModal) ? _c('div', {
+  }, [(_vm.openModal && !_vm.hidePopup) ? _c('div', {
     staticClass: "lightbox--modal"
   }, [_c('div', {
     staticClass: "lightbox--modal__counter"
   }, [_vm._v(" " + _vm._s(_vm.index + 1) + " / " + _vm._s(_vm.items.length) + " ")]), _vm._v(" "), _c('button', {
     staticClass: "lightbox--modal__btn lightbox--modal__btn-outline-danger lightbox--modal__btn-sm lightbox--modal__btn-close",
     on: {
-      "click": _vm.close
+      "click": function($event) {
+        _vm.close;
+        _vm.$emit('click:close')
+      }
     }
   }, [_c('svg', {
     attrs: {
@@ -706,7 +745,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('button', {
     staticClass: "lightbox--modal__btn lightbox--modal__btn-outline-primary lightbox--modal__btn-prev",
     on: {
-      "click": _vm.prev
+      "click": function($event) {
+        _vm.prev;
+        _vm.$emit('click:prev')
+      }
     }
   }, [_c('svg', {
     attrs: {
@@ -723,7 +765,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('button', {
     staticClass: "lightbox--modal__btn lightbox--modal__btn-outline-primary lightbox--modal__btn-next",
     on: {
-      "click": _vm.next
+      "click": function($event) {
+        _vm.next;
+        _vm.$emit('click:next')
+      }
     }
   }, [_c('svg', {
     attrs: {
